@@ -135,7 +135,7 @@ PrintPosition (Ptr<Node> node)
 static ns3::GlobalValue g_configuration ("configuration",
                                          "Configuration Value (0, 1, or 2)",
                                          ns3::UintegerValue (1),
-                                         ns3::MakeUintegerChecker<unit32_t> ());
+                                         ns3::MakeUintegerChecker<uint32_t> (0, 2));
 
 static ns3::GlobalValue g_bufferSize ("bufferSize", "RLC tx buffer size (MB)",
                                       ns3::UintegerValue (10),

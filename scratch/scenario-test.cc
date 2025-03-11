@@ -135,7 +135,7 @@ PrintPosition (Ptr<Node> node)
 static ns3::GlobalValue g_configuration ("configuration",
                                          "Configuration Value (0, 1, or 2)",
                                          ns3::UintegerValue (1),
-                                         ns3::MakeUintegerChecker<unit32_t> (0, 2));
+                                         ns3::MakeUintegerChecker<unit32_t> ());
 
 static ns3::GlobalValue g_bufferSize ("bufferSize", "RLC tx buffer size (MB)",
                                       ns3::UintegerValue (10),
@@ -378,6 +378,8 @@ main (int argc, char *argv[])
     centerFrequency = 3.5e9;
   } else if (configuration == 2) {
     centerFrequency = 28e9;
+  } else {
+    centerFrequency = 3.5e9;
   }
   // Distance between the mmWave BSs and the two co-located LTE and mmWave BSs in meters
   double isd = 1000; // (interside distance)

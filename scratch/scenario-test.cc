@@ -213,11 +213,11 @@ static ns3::GlobalValue
 
 static ns3::GlobalValue g_minSpeed ("minSpeed", "Minimum UE speed in m/s",
                                     ns3::DoubleValue (2.0),
-                                    ns3::MakeDoubleChecker<double> ())
+                                    ns3::MakeDoubleChecker<double> ());
 
 static ns3::GlobalValue g_maxSpeed ("maxSpeed", "Maximum UE speed in m/s",
                                     ns3::DoubleValue (4.0),
-                                    ns3::MakeDoubleChecker<double> ())
+                                    ns3::MakeDoubleChecker<double> ());
 
 static ns3::GlobalValue g_controlFileName ("controlFileName",
                                            "The path to the control file (can be absolute)",

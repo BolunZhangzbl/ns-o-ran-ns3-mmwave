@@ -211,6 +211,14 @@ static ns3::GlobalValue
                            "If true, generate offline file logging instead of connecting to RIC",
                            ns3::BooleanValue (false), ns3::MakeBooleanChecker ());
 
+static ns3::GlobalValue g_minSpeed ("minSpeed", "Minimum UE speed in m/s",
+                                    ns3::DoubleValue (2.0),
+                                    ns3::MakeDoubleChecker<double> ())
+
+static ns3::GlobalValue g_maxSpeed ("maxSpeed", "Maximum UE speed in m/s",
+                                    ns3::DoubleValue (4.0),
+                                    ns3::MakeDoubleChecker<double> ())
+
 static ns3::GlobalValue g_controlFileName ("controlFileName",
                                            "The path to the control file (can be absolute)",
                                            ns3::StringValue (""),
@@ -296,6 +304,10 @@ main (int argc, char *argv[])
   uint32_t ues = uintegerValue.Get ();
   GlobalValue::GetValueByName ("dataRate", uintegerValue);
   uint32_t dataRateInt = uintegerValue.Get ();
+  GlobalValue::GetValueByName ("minSpeed", doubleValue);
+  double minSpeed = doubleValue.Get ();
+  GlobalValue::GetValueByName ("maxSpeed", doubleValue);
+  double maxSpeed = doubleValue.Get ();
 
   // Convert integer to dataRate string
   std::stringstream ss;
@@ -306,7 +318,8 @@ main (int argc, char *argv[])
   DataRate dataRate (dataRateStr);
 
   NS_LOG_UNCOND ("configuration" << configuration << " rlcAmEnabled" << rlcAmEnabled
-                                 << " ues" << ues << " dataRate" << dataRate);
+                                 << " ues" << ues << " dataRate" << dataRate
+                                 << " minSpeed" << minSpeed << " maxSpeed" << maxSpeed);
 
 
   Config::SetDefault ("ns3::LteEnbNetDevice::ControlFileName", StringValue (controlFilename));
@@ -483,8 +496,8 @@ main (int argc, char *argv[])
   uePositionAlloc->SetY (centerPosition.y);
   uePositionAlloc->SetRho (isd);
   Ptr<UniformRandomVariable> speed = CreateObject<UniformRandomVariable> ();
-  speed->SetAttribute ("Min", DoubleValue (2.0));
-  speed->SetAttribute ("Max", DoubleValue (4.0));
+  speed->SetAttribute ("Min", DoubleValue (minSpeed));
+  speed->SetAttribute ("Max", DoubleValue (maxSpeed));
 
   uemobility.SetMobilityModel ("ns3::RandomWalk2dOutdoorMobilityModel", "Speed",
                                PointerValue (speed), "Bounds",
